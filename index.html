@@ -3,69 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>테트리스</title>
+  <title>대전 테트리스</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
     <header class="header">
-      <h1>테트리스</h1>
-      <p class="subtitle">브라우저에서 바로 플레이</p>
+      <h1>대전 테트리스</h1>
+      <p class="subtitle">CPU 대전 · 실력에 맞춰 성장하는 AI · 2인 로컬 대전</p>
     </header>
 
-    <main class="game-container">
-      <aside class="panel panel-left">
-        <div class="stat-box">
-          <span class="stat-label">점수</span>
-          <span id="score" class="stat-value">0</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-label">레벨</span>
-          <span id="level" class="stat-value">1</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-label">라인</span>
-          <span id="lines" class="stat-value">0</span>
-        </div>
-      </aside>
-
-      <div class="board-wrapper">
-        <canvas id="board" width="300" height="600"></canvas>
-        <div id="overlay" class="overlay hidden">
-          <div class="overlay-content">
-            <h2 id="overlay-title">테트리스</h2>
-            <p id="overlay-message">스페이스 또는 Enter로 시작</p>
-            <button id="start-btn" class="btn">시작</button>
+    <main class="versus-container">
+      <section class="player-zone player-1">
+        <h2 class="player-title p1-color">플레이어</h2>
+        <div class="player-layout">
+          <aside class="panel">
+            <div class="stat-box">
+              <span class="stat-label">점수</span>
+              <span id="score-p1" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">레벨</span>
+              <span id="level-p1" class="stat-value">1</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">라인</span>
+              <span id="lines-p1" class="stat-value">0</span>
+            </div>
+            <div class="preview-box">
+              <span class="stat-label">다음</span>
+              <canvas id="next-p1" width="100" height="100"></canvas>
+            </div>
+            <div class="preview-box">
+              <span class="stat-label">홀드</span>
+              <canvas id="hold-p1" width="100" height="100"></canvas>
+            </div>
+          </aside>
+          <div class="board-wrapper">
+            <canvas id="board-p1" width="240" height="480"></canvas>
+            <div id="defeat-p1" class="defeat-overlay hidden">패배</div>
           </div>
         </div>
+        <div class="controls-info">
+          <kbd>←</kbd><kbd>→</kbd> 이동 · <kbd>↓</kbd> 소프트 · <kbd>↑</kbd> 회전 · <kbd>Space</kbd> 하드 · <kbd>C</kbd> 홀드
+        </div>
+      </section>
+
+      <div class="vs-divider">
+        <span class="vs-text">VS</span>
       </div>
 
-      <aside class="panel panel-right">
-        <div class="preview-box">
-          <span class="stat-label">다음</span>
-          <canvas id="next" width="120" height="120"></canvas>
+      <section class="player-zone player-2">
+        <h2 id="p2-title" class="player-title p2-color">CPU</h2>
+        <div class="player-layout">
+          <div class="board-wrapper">
+            <canvas id="board-p2" width="240" height="480"></canvas>
+            <div id="defeat-p2" class="defeat-overlay hidden">패배</div>
+          </div>
+          <aside class="panel">
+            <div class="stat-box">
+              <span class="stat-label">점수</span>
+              <span id="score-p2" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">레벨</span>
+              <span id="level-p2" class="stat-value">1</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">라인</span>
+              <span id="lines-p2" class="stat-value">0</span>
+            </div>
+            <div class="preview-box">
+              <span class="stat-label">다음</span>
+              <canvas id="next-p2" width="100" height="100"></canvas>
+            </div>
+            <div class="preview-box">
+              <span class="stat-label">홀드</span>
+              <canvas id="hold-p2" width="100" height="100"></canvas>
+            </div>
+          </aside>
         </div>
-        <div class="preview-box">
-          <span class="stat-label">홀드</span>
-          <canvas id="hold" width="120" height="120"></canvas>
+        <div id="p2-controls" class="controls-info" style="display:none">
+          <kbd>A</kbd><kbd>D</kbd> 이동 · <kbd>S</kbd> 소프트 · <kbd>W</kbd> 회전 · <kbd>F</kbd> 하드 · <kbd>E</kbd> 홀드
         </div>
-        <div class="controls-info">
-          <h3>조작법</h3>
-          <ul>
-            <li><kbd>←</kbd><kbd>→</kbd> 이동</li>
-            <li><kbd>↓</kbd> 소프트 드롭</li>
-            <li><kbd>↑</kbd> 회전</li>
-            <li><kbd>Space</kbd> 하드 드롭</li>
-            <li><kbd>C</kbd> 홀드</li>
-            <li><kbd>P</kbd> 일시정지</li>
-          </ul>
-        </div>
-      </aside>
+      </section>
     </main>
+
+    <p class="global-hint"><kbd>P</kbd> 일시정지 · <kbd>Enter</kbd> / <kbd>Space</kbd> 시작</p>
+
+    <div id="overlay" class="global-overlay">
+      <div class="overlay-content">
+        <h2 id="overlay-title">대전 테트리스</h2>
+        <p id="overlay-message">모드를 선택하고 시작하세요</p>
+
+        <div class="mode-select">
+          <button id="mode-cpu" class="mode-btn active" type="button">vs CPU</button>
+          <button id="mode-2p" class="mode-btn" type="button">2인 대전</button>
+        </div>
+
+        <div id="skill-display" class="skill-display">
+          <span>내 실력 <strong id="player-skill-lv">1</strong></span>
+          <span>CPU <strong id="cpu-skill-lv">1</strong></span>
+        </div>
+
+        <button id="start-btn" class="btn">시작</button>
+      </div>
+    </div>
   </div>
 
   <script src="js/tetrominoes.js"></script>
   <script src="js/board.js"></script>
+  <script src="js/adaptive.js"></script>
+  <script src="js/cpu-ai.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>
