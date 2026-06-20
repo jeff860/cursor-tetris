@@ -29,8 +29,24 @@ class TetrisGame {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    drawGrid(this.ctx, COLS, ROWS);
-    // Draw board content... (simplified for now)
+    this.drawGrid();
+  }
+
+  drawGrid() {
+    this.ctx.strokeStyle = COLORS.grid;
+    this.ctx.lineWidth = 0.5;
+    for (let x = 0; x <= COLS; x++) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x * BLOCK_SIZE, 0);
+      this.ctx.lineTo(x * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+      this.ctx.stroke();
+    }
+    for (let y = 0; y <= ROWS; y++) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, y * BLOCK_SIZE);
+      this.ctx.lineTo(COLS * BLOCK_SIZE, y * BLOCK_SIZE);
+      this.ctx.stroke();
+    }
   }
 
   spawnPiece() {
