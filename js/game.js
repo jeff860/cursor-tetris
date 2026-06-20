@@ -58,16 +58,34 @@ class TetrisGame {
       this.draw();
     }
   }
-
-  loop(timestamp) {
-    if (this.state !== STATE.PLAYING) return;
-    if (timestamp - this.lastDrop >= this.dropInterval) {
-      // Drop logic...
-      this.lastDrop = timestamp;
-    }
+drop() {
+  if (this.state !== STATE.PLAYING) return;
+  if (isValidPosition(this.board, this.currentPiece, 0, 1)) {
+    this.currentPiece.y++;
+    this.lastDrop = performance.now();
     this.draw();
-    this.animationId = requestAnimationFrame(this.loop.bind(this));
+  } else {
+    this.lockPiece();
   }
+}
+
+lockPiece() {
+  this.board = lockPiece(this.board, this.currentPiece);
+  const result = clearLines(this.board);
+  this.board = result.board;
+  this.score += getScoreForLines(result.cleared, this.level);
+  this.scoreEl.textContent = this.score;
+  this.spawnPiece();
+}
+
+loop(timestamp) {
+  if (this.state !== STATE.PLAYING) return;
+  if (timestamp - this.lastDrop >= this.dropInterval) {
+    this.drop();
+  }
+  this.draw();
+  this.animationId = requestAnimationFrame(this.loop.bind(this));
+}
 }
 
 const STATE = { IDLE: 'idle', PLAYING: 'playing', GAMEOVER: 'gameover' };
@@ -80,11 +98,17 @@ const game1 = new TetrisGame(1, p1Controls);
 const game2 = new TetrisGame(2, p2Controls);
 
 document.getElementById('start-btn').addEventListener('click', () => {
-  document.getElementById('overlay').classList.add('hidden');
-  game1.start();
-  game2.start();
+document.getElementById('overlay').classList.add('hidden');
+game1.start();
+game2.start();
 });
 
 document.addEventListener('keydown', (e) => {
-  // Handle P1 and P2 controls
+[game1, game2].forEach(game => {
+  if (e.code === game.controls.left) game.move(-1, 0);
+  else if (e.code === game.controls.right) game.move(1, 0);
+  else if (e.code === game.controls.down) game.drop();
+  else if (e.code === game.controls.rotate) game.rotate();
 });
+});
+
