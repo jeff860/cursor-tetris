@@ -183,7 +183,9 @@ function rotateCurrentPiece() {
 
   const direction = rotationDirEl.value === 'cw' ? 1 : -1;
   const rotated = rotatePiece(currentPiece, direction);
-  const kicks = [0, -1, 1, -2, 2];
+  
+  // Prioritize no movement (0), then small adjustments (1, -1) to reduce shaking
+  const kicks = [0, 1, -1];
 
   for (const kick of kicks) {
     if (isValidPosition(board, { ...rotated, x: rotated.x + kick })) {
