@@ -97,11 +97,19 @@ const p2Controls = { left: 'KeyA', right: 'KeyD', down: 'KeyS', rotate: 'KeyW', 
 const game1 = new TetrisGame(1, p1Controls);
 const game2 = new TetrisGame(2, p2Controls);
 
-document.getElementById('start-btn').addEventListener('click', () => {
-  console.log("Start button clicked");
-  document.getElementById('overlay').classList.add('hidden');
-  game1.start();
-  game2.start();
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM loaded, initializing game...");
+  const startBtn = document.getElementById('start-btn');
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      console.log("Start button clicked");
+      document.getElementById('overlay').classList.add('hidden');
+      game1.start();
+      game2.start();
+    });
+  } else {
+    console.error("Start button not found!");
+  }
 });
 document.addEventListener('keydown', (e) => {
 [game1, game2].forEach(game => {
