@@ -3,80 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>테트리스</title>
+  <title>2인용 테트리스</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
     <header class="header">
-      <h1>테트리스</h1>
-      <p class="subtitle">브라우저에서 바로 플레이</p>
+      <h1>2인용 테트리스</h1>
     </header>
 
     <main class="game-container">
-      <aside class="panel panel-left">
-        <div class="stat-box">
-          <span class="stat-label">점수</span>
-          <span id="score" class="stat-value">0</span>
+      <!-- Player 1 -->
+      <section class="player-zone">
+        <h2>1P (Numpad)</h2>
+        <div class="board-wrapper">
+          <canvas id="board-1" width="300" height="600"></canvas>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">레벨</span>
-          <span id="level" class="stat-value">1</span>
+        <div class="panel">
+          <div class="stat-box">점수: <span id="score-1">0</span></div>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">라인</span>
-          <span id="lines" class="stat-value">0</span>
-        </div>
-      </aside>
+      </section>
 
-      <div class="board-wrapper">
-        <canvas id="board" width="300" height="600"></canvas>
-        <div id="overlay" class="overlay hidden">
-          <div class="overlay-content">
-            <h2 id="overlay-title">테트리스</h2>
-            <p id="overlay-message">스페이스 또는 Enter로 시작</p>
-            <div class="mode-select">
-          <button id="mode-cpu" class="mode-btn active" type="button">vs CPU</button>
-          <button id="mode-2p" class="mode-btn" type="button">2인 대전</button>
+      <!-- Player 2 -->
+      <section class="player-zone">
+        <h2>2P (WASD)</h2>
+        <div class="board-wrapper">
+          <canvas id="board-2" width="300" height="600"></canvas>
         </div>
-
-        <div class="settings-panel">
-          <label>
-            회전 방향:
-            <select id="rotation-dir">
-              <option value="cw" selected>시계 방향</option>
-              <option value="ccw">반시계 방향</option>
-            </select>
-          </label>
+        <div class="panel">
+          <div class="stat-box">점수: <span id="score-2">0</span></div>
         </div>
-
-        <button id="start-btn" class="btn">시작</button>
-          </div>
-        </div>
-      </div>
-
-      <aside class="panel panel-right">
-        <div class="preview-box">
-          <span class="stat-label">다음</span>
-          <canvas id="next" width="120" height="120"></canvas>
-        </div>
-        <div class="preview-box">
-          <span class="stat-label">홀드</span>
-          <canvas id="hold" width="120" height="120"></canvas>
-        </div>
-        <div class="controls-info">
-          <h3>조작법</h3>
-          <ul>
-            <li><kbd>←</kbd><kbd>→</kbd> 이동</li>
-            <li><kbd>↓</kbd> 소프트 드롭</li>
-            <li><kbd>↑</kbd> 회전</li>
-            <li><kbd>Space</kbd> 하드 드롭</li>
-            <li><kbd>C</kbd> 홀드</li>
-            <li><kbd>P</kbd> 일시정지</li>
-          </ul>
-        </div>
-      </aside>
+      </section>
     </main>
+
+    <div id="overlay" class="overlay">
+      <div class="overlay-content">
+        <h2>2인용 테트리스</h2>
+        <button id="start-btn" class="btn">시작</button>
+      </div>
+    </div>
   </div>
 
   <script src="js/tetrominoes.js"></script>
