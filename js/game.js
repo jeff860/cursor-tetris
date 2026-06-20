@@ -12,6 +12,7 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayMessage = document.getElementById('overlay-message');
 const startBtn = document.getElementById('start-btn');
+const rotationDirEl = document.getElementById('rotation-dir');
 
 const STATE = { IDLE: 'idle', PLAYING: 'playing', PAUSED: 'paused', GAMEOVER: 'gameover' };
 
@@ -180,7 +181,8 @@ function movePiece(dx, dy) {
 function rotateCurrentPiece() {
   if (state !== STATE.PLAYING || !currentPiece) return;
 
-  const rotated = rotatePiece(currentPiece);
+  const direction = rotationDirEl.value === 'cw' ? 1 : -1;
+  const rotated = rotatePiece(currentPiece, direction);
   const kicks = [0, -1, 1, -2, 2];
 
   for (const kick of kicks) {

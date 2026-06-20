@@ -35,7 +35,22 @@
           <div class="overlay-content">
             <h2 id="overlay-title">테트리스</h2>
             <p id="overlay-message">스페이스 또는 Enter로 시작</p>
-            <button id="start-btn" class="btn">시작</button>
+            <div class="mode-select">
+          <button id="mode-cpu" class="mode-btn active" type="button">vs CPU</button>
+          <button id="mode-2p" class="mode-btn" type="button">2인 대전</button>
+        </div>
+
+        <div class="settings-panel">
+          <label>
+            회전 방향:
+            <select id="rotation-dir">
+              <option value="cw" selected>시계 방향</option>
+              <option value="ccw">반시계 방향</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="start-btn" class="btn">시작</button>
           </div>
         </div>
       </div>
