@@ -98,11 +98,11 @@ const game1 = new TetrisGame(1, p1Controls);
 const game2 = new TetrisGame(2, p2Controls);
 
 document.getElementById('start-btn').addEventListener('click', () => {
-document.getElementById('overlay').classList.add('hidden');
-game1.start();
-game2.start();
+  console.log("Start button clicked");
+  document.getElementById('overlay').classList.add('hidden');
+  game1.start();
+  game2.start();
 });
-
 document.addEventListener('keydown', (e) => {
 [game1, game2].forEach(game => {
   if (e.code === game.controls.left) game.move(-1, 0);
